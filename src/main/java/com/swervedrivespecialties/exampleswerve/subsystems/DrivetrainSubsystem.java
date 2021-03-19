@@ -1,5 +1,6 @@
 package com.swervedrivespecialties.exampleswerve.subsystems;
 
+import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.swervedrivespecialties.exampleswerve.RobotMap;
@@ -64,11 +65,15 @@ public class DrivetrainSubsystem extends Subsystem {
             new Translation2d(-RobotMap.TRACKWIDTH / 2.0, -RobotMap.WHEELBASE / 2.0)
     );
 
-    private final Gyroscope gyroscope = new NavX(SPI.Port.kMXP);
+    PigeonIMU _pigeon;
 
     public DrivetrainSubsystem() {
-        gyroscope.calibrate();
-        gyroscope.setInverted(true); // You might not need to invert the gyro
+
+        _pigeon = new PigeonIMU(1);
+
+        //_pigeon.enterCalibrationMode(PigeonIMU.CalibrationMode.Accelerometer);
+        //gyroscope.calibrate();
+        //gyroscope.setInverted(true); // You might not need to invert the gyro
 
         frontLeftModule.setName("Front Left");
         frontRightModule.setName("Front Right");
@@ -96,7 +101,7 @@ public class DrivetrainSubsystem extends Subsystem {
         SmartDashboard.putNumber("Back Left Module Angle", Math.toDegrees(backLeftModule.getCurrentAngle()));
         SmartDashboard.putNumber("Back Right Module Angle", Math.toDegrees(backRightModule.getCurrentAngle()));
 
-        SmartDashboard.putNumber("Gyroscope Angle", gyroscope.getAngle().toDegrees());
+        SmartDashboard.putNumber("Gyroscope Angle", _pigeon.getCompassHeading());
 
         frontLeftModule.updateState(TimedRobot.kDefaultPeriod);
         frontRightModule.updateState(TimedRobot.kDefaultPeriod);
@@ -109,7 +114,7 @@ public class DrivetrainSubsystem extends Subsystem {
         ChassisSpeeds speeds;
         if (fieldOriented) {
             speeds = ChassisSpeeds.fromFieldRelativeSpeeds(translation.getX(), translation.getY(), rotation,
-                    Rotation2d.fromDegrees(gyroscope.getAngle().toDegrees()));
+                    Rotation2d.fromDegrees(_pigeon.getCompassHeading()));
         } else {
             speeds = new ChassisSpeeds(translation.getX(), translation.getY(), rotation);
         }
@@ -121,8 +126,8 @@ public class DrivetrainSubsystem extends Subsystem {
         backRightModule.setTargetVelocity(states[3].speedMetersPerSecond, states[3].angle.getRadians());
     }
 
-    public void resetGyroscope() {
-        gyroscope.setAdjustmentAngle(gyroscope.getUnadjustedAngle());
+    public void resetGyroscope()  {
+        _pigeon.setYaw(0);
     }
 
     @Override
