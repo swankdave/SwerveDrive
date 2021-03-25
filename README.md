@@ -115,3 +115,7 @@ SwerveModule module = new Mk2SwerveModuleBuilder(new Vector2(5.0, 5.0))
     .driveMotor(new TalonSRX(5), Mk2SwerveModuleBuilder.MotorType.CIM)
     .build();
 ```
+
+#########################################################################################################
+Following comments in this Readme.md file are made by the Globetrotters Robotics coding team
+######################################################################################################
