@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'edu.wpi.first.GradleRIO' version '2020.1.2'
+    id 'edu.wpi.first.GradleRIO' version '2021.2.2'
 }
 
 def ROBOT_MAIN_CLASS = "com.swervedrivespecialties.exampleswerve.Main"
@@ -28,7 +28,7 @@ repositories {
         url = "https://jitpack.io"
     }
 
-    String frcYear = '2020'
+    String frcYear = '2021'
     File frcHome
     if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
         String publicFolder = System.getenv('PUBLIC')
@@ -52,7 +52,7 @@ repositories {
 deploy {
     targets {
         roboRIO('roborio') {
-            team = frc.getTeamOrDefault(2910)
+            team = frc.getTeamOrDefault(5927)
         }
     }
     artifacts {
