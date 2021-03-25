@@ -117,5 +117,5 @@ SwerveModule module = new Mk2SwerveModuleBuilder(new Vector2(5.0, 5.0))
 ```
 
 #########################################################################################################
-Following comments in this Readme.md file are made by the Globetrotters Robotics coding team
+Following comments in this Readme.md file are made by the Globetrotters Robotics coding team.
 ######################################################################################################
